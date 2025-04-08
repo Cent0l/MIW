@@ -1,16 +1,11 @@
 import pandas as pd
 from collections import Counter
 
+
 # Dane wejściowe
-dane = pd.DataFrame([
-    [2, 6, 1, 2, 3, 1],
-    [1, 1, 1, 3, 2, 1],
-    [2, 1, 1, 2, 3, 1],
-    [4, 1, 3, 1, 2, 1],
-    [3, 5, 2, 1, 3, 2],
-    [3, 1, 3, 1, 1, 2],
-    [1, 1, 1, 3, 1, 2]
-], columns=['a1', 'a2', 'a3', 'a4', 'a5', 'd'])
+dane = pd.read_csv('file.txt', sep=" ", header=None)
+n = dane.shape[1]
+dane.columns=[f'a{i+1}' for i in range(n-1)]+['d']
 
 atrybuty = dane.columns[:-1]  # bez kolumny decyzyjnej
 
@@ -96,5 +91,5 @@ for decyzja in sorted(dane['d'].unique()):
 for i, (regula, decyzja, ile) in enumerate(reguly):
     lewa = " ∧ ".join(f"({a} = {v})" for a, v in regula)
     prawa = f"(d = {decyzja})"
-    suf = f"[{ile}]" if ile > 1 else ""
-    print(f"reg: {i+1} {lewa} => {prawa}{suf}")
+    sup = f"[{ile}]" if ile > 1 else ""
+    print(f"reg: {i+1} {lewa} => {prawa}{sup}")
